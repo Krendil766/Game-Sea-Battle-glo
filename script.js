@@ -62,7 +62,7 @@ const show = {
 
 const fire = (e) => {
     const target = e.target;
-    if(target.classList.length!==0 || target.tagName!=='TD')return;
+    if(target.classList.length!==0 || target.tagName!=='TD' || game.shipCount<1)return;
     play.updateData = 'shot';
     show.miss(target);
 
@@ -83,7 +83,7 @@ const fire = (e) => {
                 if(game.shipCount<1){
                     header.textContent='GAME OVER';
                     header.style.color = 'red';
-                    console.log(e.stopPropagation());
+                    target.classList.remove('shot')
                     if(play.shot<play.record || play.record===0){
                         localStorage.setItem('seaBattleRecord', play.shot);
                         play.record=play.shot;
