@@ -13,6 +13,7 @@ const game = {
         count: [1, 2, 3, 4],
         size: [4, 3, 2, 1],
     },
+    collision: new Set(),
     generateShip() {
         for (let i = 0; i < this.optionShips.count.length; i++) {
             for (let j = 0; j < this.optionShips.count[i]; j++) {
@@ -46,9 +47,34 @@ const game = {
                 ship.location.push((x + i) + "" + y);
             }
             ship.hit.push('');
-        }
+        };
+        if (this.checkCollision(ship.location)){
+            return this.generateOptionsShip(shipSize)
+        };
+        this.addCollision(ship.location)
         return ship;
     },
+    checkCollision(location){
+        for(const coord of location){
+            if(this.collision.has(coord)){
+                return true;
+            }
+        }
+    },
+    addCollision(location){
+        for(let i = 0; i<location.length; i++){
+            const startCoordX = location[i][0] - 1;
+            for(let j = startCoordX; j<startCoordX + 3; j++){
+                const startCoordY = location[i][1]-1;
+                for(let z = startCoordY; z < startCoordY +3; z++){
+                    if(j >= 0 && j < 10 && z >= 0 && z < 10 ){
+                        const coord = j + "" + z;
+                        this.collision.add(coord);
+                    }
+                }
+            }
+       }
+    }
 };
 
 const play = {
@@ -125,7 +151,7 @@ const init = () => {
     play.render();
     game.generateShip();
 
-    console.log(game.ships);
+    console.log(game);
 
     again.addEventListener('click', () => {
         location.reload();
