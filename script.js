@@ -48,32 +48,32 @@ const game = {
             }
             ship.hit.push('');
         };
-        if (this.checkCollision(ship.location)){
+        if (this.checkCollision(ship.location)) {
             return this.generateOptionsShip(shipSize)
         };
         this.addCollision(ship.location)
         return ship;
     },
-    checkCollision(location){
-        for(const coord of location){
-            if(this.collision.has(coord)){
+    checkCollision(location) {
+        for (const coord of location) {
+            if (this.collision.has(coord)) {
                 return true;
             }
         }
     },
-    addCollision(location){
-        for(let i = 0; i<location.length; i++){
+    addCollision(location) {
+        for (let i = 0; i < location.length; i++) {
             const startCoordX = location[i][0] - 1;
-            for(let j = startCoordX; j<startCoordX + 3; j++){
-                const startCoordY = location[i][1]-1;
-                for(let z = startCoordY; z < startCoordY +3; z++){
-                    if(j >= 0 && j < 10 && z >= 0 && z < 10 ){
+            for (let j = startCoordX; j < startCoordX + 3; j++) {
+                const startCoordY = location[i][1] - 1;
+                for (let z = startCoordY; z < startCoordY + 3; z++) {
+                    if (j >= 0 && j < 10 && z >= 0 && z < 10) {
                         const coord = j + "" + z;
                         this.collision.add(coord);
                     }
                 }
             }
-       }
+        }
     }
 };
 
@@ -130,7 +130,7 @@ const fire = (e) => {
                 };
                 game.shipCount--;
                 if (!game.shipCount) {
-                    header.textContent = 'GAME OVER';
+                    header.textContent = 'YOU WIN!!!';
                     header.style.color = 'red';
                     target.classList.remove('shot')
                     if (play.shot < play.record || play.record === 0) {
@@ -151,10 +151,8 @@ const init = () => {
     play.render();
     game.generateShip();
 
-    console.log(game);
-
     again.addEventListener('click', () => {
-        location.reload();
+        init();
     });
     record.addEventListener('dblclick', () => {
         localStorage.clear();
@@ -162,4 +160,8 @@ const init = () => {
         play.render();
     });
 }
+
 init();
+
+const idD = glo('#idD')
+console.log(idD);
